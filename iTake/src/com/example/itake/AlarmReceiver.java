@@ -20,7 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 /**
- * @author WhiteDivinity
+ * @author Wolfpack16
  *
  */
 public class AlarmReceiver extends Activity 

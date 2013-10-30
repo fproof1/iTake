@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 /**
- * @author WhiteDivinity
+ * @author Wolfpack16
  *
  */
 public class AlarmTimer extends Activity 
