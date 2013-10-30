@@ -29,24 +29,29 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class id {
         public static final int dummy_button=0x7f070002;
-        public static final int emaillogin=0x7f070005;
+        public static final int emaillogin=0x7f070007;
         public static final int fullscreen_content=0x7f070000;
         public static final int fullscreen_content_controls=0x7f070001;
-        public static final int loginbutton=0x7f070008;
-        public static final int loginprompt=0x7f07000a;
-        public static final int newuser_prompt=0x7f070003;
-        public static final int newuserbutton=0x7f07000b;
-        public static final int passwordconfirm=0x7f070007;
-        public static final int passwordlogin=0x7f070006;
-        public static final int reg_prompt=0x7f070004;
-        public static final int welcometv=0x7f070009;
+        public static final int loginbutton=0x7f07000a;
+        public static final int loginprompt=0x7f07000c;
+        public static final int newuser_prompt=0x7f070005;
+        public static final int newuserbutton=0x7f07000d;
+        public static final int passwordconfirm=0x7f070009;
+        public static final int passwordlogin=0x7f070008;
+        public static final int reg_prompt=0x7f070006;
+        public static final int stopAlarm=0x7f070003;
+        public static final int test=0x7f070004;
+        public static final int welcometv=0x7f07000b;
     }
     public static final class layout {
         public static final int activity_fullscreen=0x7f030000;
-        public static final int user_reg=0x7f030001;
-        public static final int welcomsplash=0x7f030002;
+        public static final int alarm=0x7f030001;
+        public static final int main=0x7f030002;
+        public static final int user_reg=0x7f030003;
+        public static final int welcomsplash=0x7f030004;
     }
     public static final class string {
+        public static final int alarm_hello=0x7f05000a;
         public static final int app_name=0x7f050000;
         public static final int dummy_button=0x7f050001;
         public static final int dummy_content=0x7f050002;
@@ -57,6 +62,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int password_confirm_hint=0x7f050009;
         public static final int password_hint=0x7f050003;
         public static final int registration=0x7f050008;
+        public static final int stop_alarm=0x7f05000b;
     }
     public static final class style {
         /** 

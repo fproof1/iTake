@@ -102,7 +102,9 @@ public class FullscreenActivity extends Activity {
             public void onClick(View view) {
                 if (TOGGLE_ON_CLICK) {
                     mSystemUiHider.toggle();
+                    setContentView(R.layout.user_reg); // Testing to see what happens
                 } else {
+                	//setContentView(R.layout.user_reg);
                     mSystemUiHider.show();
                 }
             }

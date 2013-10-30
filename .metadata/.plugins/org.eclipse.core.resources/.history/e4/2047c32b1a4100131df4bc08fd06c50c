@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">iTake</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="password_hint">password</string>
+    <string name = "email_hint">email</string>
+    <string name = "login_prompt">Enter login information</string>
+    <string name="login">Log in!</string>
+    <string name = "new_user">New to iTake?</string>
+    <string name= "registration">Enter registration information</string>
+	<string name="password_confirm_hint">confirm password</string>
+</resources>

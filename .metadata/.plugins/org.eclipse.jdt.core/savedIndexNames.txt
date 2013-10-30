@@ -1,4 +1,4 @@
-INDEX VERSION 1.126+C:\Users\Frank\Documents\GitHub\iTake\.metadata\.plugins\org.eclipse.jdt.core
+INDEX VERSION 1.126+C:\Android Development\Projects\.metadata\.plugins\org.eclipse.jdt.core
+3470816865.index
+718940098.index
 3892798026.index
-733116189.index
-397105425.index

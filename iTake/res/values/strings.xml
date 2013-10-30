@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">iTake</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -11,4 +10,6 @@
     <string name = "new_user">New to iTake?</string>
     <string name= "registration">Enter registration information</string>
 	<string name="password_confirm_hint">confirm password</string>
+    <string name="alarm_hello">The alarm will start in five seconds.</string>
+    <string name="stop_alarm">Stop Alarm</string>
 </resources>
