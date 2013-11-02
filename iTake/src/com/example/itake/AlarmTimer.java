@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 /**
- * @author Wolfpack16
+ * @author Wolfpack16 (Alex Kane)
  *
  */
 public class AlarmTimer extends Activity 
@@ -37,4 +37,5 @@ public class AlarmTimer extends Activity
             (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
+    
 }

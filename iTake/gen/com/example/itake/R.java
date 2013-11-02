@@ -19,6 +19,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int buttonBarStyle=0x7f010000;
     }
     public static final class color {
+        public static final int black_back=0x7f040004;
         public static final int black_overlay=0x7f040000;
         public static final int blue_back=0x7f040002;
         public static final int grey_button=0x7f040003;

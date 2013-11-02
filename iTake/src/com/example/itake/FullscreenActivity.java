@@ -4,6 +4,7 @@ import com.example.itake.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -101,8 +102,11 @@ public class FullscreenActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (TOGGLE_ON_CLICK) {
-                    mSystemUiHider.toggle();
-                    setContentView(R.layout.user_reg); // Testing to see what happens
+                   // mSystemUiHider.toggle();
+                   // setContentView(R.layout.user_reg); // Testing to see what happens
+                	Intent i = new Intent(getApplicationContext(), AlarmTimer.class);
+                	startActivity(i);
+                	
                 } else {
                 	//setContentView(R.layout.user_reg);
                     mSystemUiHider.show();
