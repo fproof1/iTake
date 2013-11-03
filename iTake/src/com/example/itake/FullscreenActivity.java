@@ -106,7 +106,6 @@ public class FullscreenActivity extends Activity {
                    // setContentView(R.layout.user_reg); // Testing to see what happens
                 	Intent i = new Intent(getApplicationContext(), AlarmTimer.class);
                 	startActivity(i);
-                	
                 } else {
                 	//setContentView(R.layout.user_reg);
                     mSystemUiHider.show();

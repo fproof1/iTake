@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="100dp" >
+
+    <Button
+        android:id="@+id/startAlarm"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Alarm Time" />
+
+    <TextView
+        android:id="@+id/alarmprompt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000" />
+</LinearLayout>
+
+<!-- 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -12,3 +33,4 @@
             android:text="@string/alarm_hello" />
 
 </RelativeLayout>
+-->

@@ -29,20 +29,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int alarmprompt=0x7f070005;
         public static final int dummy_button=0x7f070002;
-        public static final int emaillogin=0x7f070007;
+        public static final int emaillogin=0x7f070008;
         public static final int fullscreen_content=0x7f070000;
         public static final int fullscreen_content_controls=0x7f070001;
-        public static final int loginbutton=0x7f07000a;
-        public static final int loginprompt=0x7f07000c;
-        public static final int newuser_prompt=0x7f070005;
-        public static final int newuserbutton=0x7f07000d;
-        public static final int passwordconfirm=0x7f070009;
-        public static final int passwordlogin=0x7f070008;
-        public static final int reg_prompt=0x7f070006;
+        public static final int loginbutton=0x7f07000b;
+        public static final int loginprompt=0x7f07000d;
+        public static final int newuser_prompt=0x7f070006;
+        public static final int newuserbutton=0x7f07000e;
+        public static final int passwordconfirm=0x7f07000a;
+        public static final int passwordlogin=0x7f070009;
+        public static final int reg_prompt=0x7f070007;
+        public static final int startAlarm=0x7f070004;
         public static final int stopAlarm=0x7f070003;
-        public static final int test=0x7f070004;
-        public static final int welcometv=0x7f07000b;
+        public static final int welcometv=0x7f07000c;
     }
     public static final class layout {
         public static final int activity_fullscreen=0x7f030000;

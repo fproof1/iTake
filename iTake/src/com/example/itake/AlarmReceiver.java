@@ -14,13 +14,9 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
+import android.os.Vibrator;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
 /**
  * @author Wolfpack16 (R. Alex Kane)
@@ -28,27 +24,35 @@ import android.widget.Button;
  */
 public class AlarmReceiver extends Activity 
 {
-    private MediaPlayer mMediaPlayer; 
+	private MediaPlayer mMediaPlayer; 
+	private Vibrator phoneVibrate;
+	private AudioManager audioManager;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) 
+	public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.alarm);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+   //     setContentView(R.layout.main);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Medicine Alert");
-        alertDialogBuilder.setMessage("Insert Medication Name Here");
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AlarmReceiver.this);
+        alertDialogBuilder.setTitle("Medicine Alert")
+        				  .setMessage("Insert Medication(s) Name Here")
+        				  .setCancelable(false); // User has to respond to dialog call
         
         alertDialogBuilder.setNegativeButton("Taken", new DialogInterface.OnClickListener() 
         {                   
         	public void onClick(DialogInterface dialog, int which) 
         	{
-                mMediaPlayer.stop();
-                finish();
+        		if(phoneVibrate != null)
+        		{
+        			phoneVibrate.cancel();
+        		}
+        		else
+        		{
+	        		mMediaPlayer.stop();
+        		}
+                AlarmReceiver.this.finish();
             } //end onClick.
         }); // end alertDialog.setButton.
         
@@ -56,40 +60,48 @@ public class AlarmReceiver extends Activity
         {                   
         	public void onClick(DialogInterface dialog, int which) 
         	{
-                mMediaPlayer.stop();
-                finish();
+        		if(phoneVibrate != null)
+        		{
+        			phoneVibrate.cancel();
+        		}
+        		else
+        		{
+	        		mMediaPlayer.stop();
+        		}
+                AlarmReceiver.this.finish();
             } //end onClick.
         }); // end alertDialog.setButton.
         alertDialogBuilder.show();  
-  //      Button theButton = alertDialogBuilder.getButton(DialogInterface.BUTTON_POSITIVE);
-   //     theButton.setOnClickListener(new OnClickListener(alertDialogBuilder));
-     /*   Button stopAlarm = (Button) findViewById(R.id.stopAlarm);
-        stopAlarm.setOnTouchListener(new OnTouchListener() 
-        {
-            public boolean onTouch(View arg0, MotionEvent arg1) 
-            {
-                mMediaPlayer.stop();
-                finish();
-                return false;
-            }
-        });*/
-        playSound(this, getAlarmUri());
+        playSound(AlarmReceiver.this, getAlarmUri());
     }
 
-    private void playSound(Context context, Uri alert) 
+	private void playSound(AlarmReceiver alarmReceiver, Uri alert) 
     {
         mMediaPlayer = new MediaPlayer();
-        try
+        try // Attempt Alarm Play
         {
-            mMediaPlayer.setDataSource(context, alert);
-            final AudioManager audioManager = (AudioManager) context
-                    .getSystemService(Context.AUDIO_SERVICE);
-            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) 
+            mMediaPlayer.setDataSource(getBaseContext(), alert);
+            audioManager = (AudioManager) alarmReceiver.getSystemService(Context.AUDIO_SERVICE);
+            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) // If Volume isn't 0
             {
-                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+            	mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
                 mMediaPlayer.setLooping(true);
                 mMediaPlayer.prepare();
                 mMediaPlayer.start();
+            }
+            else // If Volume is 0, vibrate
+            {
+            	// Get instance of Vibrator from current Context
+            	phoneVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+            	// Start without a delay
+            	// Vibrate for 100 milliseconds
+            	// Sleep for 1000 milliseconds
+            	long[] pattern = {0, 1000, 1000};
+
+            	// The '0' here means to repeat indefinitely
+            	// '-1' would play the vibration once
+            	phoneVibrate.vibrate(pattern, 0);
             }
         } 
         catch (IOException e) 
