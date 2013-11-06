@@ -32,8 +32,8 @@ public class AlarmReceiver extends Activity
     {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-   //     setContentView(R.layout.main);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+        		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AlarmReceiver.this);
         alertDialogBuilder.setTitle("Medicine Alert")
@@ -60,11 +60,11 @@ public class AlarmReceiver extends Activity
         {                   
         	public void onClick(DialogInterface dialog, int which) 
         	{
-        		if(phoneVibrate != null)
+        		if(phoneVibrate != null) // If phoneVibrate was set
         		{
         			phoneVibrate.cancel();
         		}
-        		else
+        		else // Else, Assume Alarm Sound was set
         		{
 	        		mMediaPlayer.stop();
         		}
@@ -74,6 +74,37 @@ public class AlarmReceiver extends Activity
         alertDialogBuilder.show();  
         playSound(AlarmReceiver.this, getAlarmUri());
     }
+	
+	@Override
+    protected void onStart() 
+    {
+        super.onStart();
+        // The activity is about to become visible.
+    }
+    @Override
+    protected void onResume() 
+    {
+        super.onResume();
+        // The activity has become visible (it is now "resumed").
+    }
+    @Override
+    protected void onPause() 
+    {
+        super.onPause();
+        // Another activity is taking focus (this activity is about to be "paused").
+    }
+    @Override
+    protected void onStop() 
+    {
+        super.onStop();
+        // The activity is no longer visible (it is now "stopped")
+    }
+    @Override
+    protected void onDestroy() 
+    {
+        super.onDestroy();
+        // The activity is about to be destroyed.
+    }
 
 	private void playSound(AlarmReceiver alarmReceiver, Uri alert) 
     {
@@ -82,9 +113,11 @@ public class AlarmReceiver extends Activity
         {
             mMediaPlayer.setDataSource(getBaseContext(), alert);
             audioManager = (AudioManager) alarmReceiver.getSystemService(Context.AUDIO_SERVICE);
-            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) // If Volume isn't 0
+            if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) // If Volume isn't 0
             {
             	mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+            	mMediaPlayer.setVolume(audioManager.getStreamVolume(AudioManager.STREAM_RING), 
+            			audioManager.getStreamVolume(AudioManager.STREAM_RING));
                 mMediaPlayer.setLooping(true);
                 mMediaPlayer.prepare();
                 mMediaPlayer.start();

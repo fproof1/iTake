@@ -1,0 +1,50 @@
+package com.example.itake.util;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+import android.app.PendingIntent;
+
+public class Database_iTake 
+{
+   public static ArrayList<PendingIntent> intentArray;
+
+   private Connection con = null;
+   private Statement st = null;
+   private ResultSet rs = null;
+
+   public Database_iTake(Main m)
+   {
+       try
+       {
+           con = DriverManager.getConnection(url, user, pw);    
+           //load database entries into arraylists
+       } 
+       catch(SQLException e) 
+       {
+           e.printStackTrace();
+       }
+   }
+
+   public addAnimal()
+   {
+       try
+       {
+           con = DriverManager.getConnection(url, user, pw);    
+           //add new animal to animal table
+       } catch(SQLException e) {
+           e.printStackTrace();
+       }
+   }
+
+   public addFarm()
+   {
+       try
+       {
+           con = DriverManager.getConnection(url, user, pw);    
+           //add new farm to farm table
+       } catch(SQLException e){
+           e.printStackTrace();
+       }
+   }
+}

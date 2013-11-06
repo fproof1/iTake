@@ -1,0 +1,22 @@
+package com.example.itake;
+
+import android.app.AlarmManager;
+import android.app.IntentService;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
+
+public class AlarmService extends IntentService 
+{		
+	private static final String TAG = "AlarmService";
+
+	public AlarmService() 
+	{
+		super(TAG);
+		Intent i = new Intent(this, AlarmReceiver.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+	    startActivity(i);
+	}
+}
