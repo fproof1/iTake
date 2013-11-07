@@ -225,7 +225,7 @@ public class AlarmTimer extends Activity
 	        
 	        int Id = 0;
 	        long time = 0;
-	        long Interval = 0;
+	     //   long Interval = 0;
 	        AlarmManager alarmManager;
 	        Intent intent;
 	        PendingIntent pendingIntent;
@@ -237,13 +237,13 @@ public class AlarmTimer extends Activity
 	        {
 	        	Id = c.getInt(0);
 	        	time = Long.parseLong(c.getString(1));
-	        	Interval = Long.parseLong(c.getString(2));
+	        //	Interval = Long.parseLong(c.getString(2));
 
 	        	intent = new Intent(getBaseContext(), AlarmOnReceive.class);
 	            pendingIntent = PendingIntent.getBroadcast(getBaseContext(), Id, intent, 0);
 	            
 	            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-	            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, Interval, pendingIntent);
+	            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
 	            
 	            c.moveToNext();
 	        }

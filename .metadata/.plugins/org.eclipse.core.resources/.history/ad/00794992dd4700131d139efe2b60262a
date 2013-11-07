@@ -77,7 +77,6 @@ public class iTakeDatabase extends SQLiteOpenHelper
         ArrayList<Row> ret = new ArrayList<Row>();
         try 
         {
-        	db = this.getReadableDatabase();
             Cursor c = db.query(ALARM_DATABASE_TABLE, new String[] {"alarm_id", "time_data", "alarm_Interval"}, 
             		null, null, null, null, null);
             int numRows = c.getCount();
@@ -103,7 +102,6 @@ public class iTakeDatabase extends SQLiteOpenHelper
     public Row alarm_fetchRow(int rowId) 
     {
         Row row = new Row();
-        db = this.getReadableDatabase();
         Cursor c = db.query(true, ALARM_DATABASE_TABLE, new String[] {"time_data", "alarm_Interval"},
         		"alarm_id=" + rowId, null, null, null, null, null);
         if (c.getCount() > 0) 
@@ -139,6 +137,7 @@ public class iTakeDatabase extends SQLiteOpenHelper
         	db = this.getReadableDatabase();
         	Cursor c = db.query(ALARM_DATABASE_TABLE, new String[] {"alarm_id", "time_data", "alarm_Interval"}, 
             		null, null, null, null, null);
+        	db.close();
         	return c;
         } 
         catch (SQLException e) 
