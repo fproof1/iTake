@@ -220,6 +220,7 @@ public class AlarmTimer extends Activity
     	// Recreate Alarms if any exist
         try
         {
+        	db = DBhelper.getReadableDatabase();
 	        Cursor c = DBhelper.alarm_GetAllRows();
 	        
 	        int Id = 0;
@@ -247,6 +248,7 @@ public class AlarmTimer extends Activity
 	            c.moveToNext();
 	        }
 	        RQS_1 = Id + 1;
+	        c.close();
 	        
 	        Toast.makeText(getBaseContext(), String.valueOf(numRows) + " Alarms Recreated!", Toast.LENGTH_SHORT).show();
         }
