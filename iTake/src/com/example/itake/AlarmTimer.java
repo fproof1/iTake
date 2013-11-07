@@ -34,18 +34,18 @@ public class AlarmTimer extends Activity
 	Button CancelAlarm;
     TextView textAlarmPrompt;
     TimePickerDialog timePickerDialog;
-    AlarmDatabase DBhelper;
+    iTakeDatabase DBhelper;
     SQLiteDatabase db;
     
     ArrayList<PendingIntent> intentArray;
     
-    final static int RQS_1 = 1; //Request Code for Intents
+    private static int RQS_1 = 0; //Request Code for Intents
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {      
     	super.onCreate(savedInstanceState);
-        DBhelper = new AlarmDatabase(this);
+        DBhelper = new iTakeDatabase(this);
         intentArray = new ArrayList<PendingIntent>();
         
         setContentView(R.layout.main);
@@ -158,16 +158,24 @@ public class AlarmTimer extends Activity
             setalarm(calset);
             dataSave(calset);
         }
-    };
-    
+    };    
+
     public void setalarm(Calendar targetCal)
-    {      
-        Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        
-        Toast.makeText(getBaseContext(), "Alarm Created!", Toast.LENGTH_SHORT).show();
+    {   
+    	try
+    	{
+	        Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
+	        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
+	        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+	        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+	        
+	        Toast.makeText(getBaseContext(), "Alarm Created!", Toast.LENGTH_SHORT).show();
+    	}
+    	catch(Exception e)
+        {
+            System.out.println("Alarm Set Error: " + e.getLocalizedMessage());
+            Toast.makeText(getBaseContext(), "Unable to Set Alarm. Please try again!", Toast.LENGTH_SHORT).show();
+        }
     }
     
     // Save Alarm Time Data in Database
@@ -179,7 +187,7 @@ public class AlarmTimer extends Activity
             db = DBhelper.getWritableDatabase();          		
 
             //insert variables into DB
-            DBhelper.createRow(String.valueOf(alarmtime.getTimeInMillis()));  
+            DBhelper.alarm_createRow(String.valueOf(alarmtime.getTimeInMillis()), String.valueOf(AlarmManager.INTERVAL_DAY));  
            
             // Check Alarm Outputs
             /*
@@ -199,6 +207,7 @@ public class AlarmTimer extends Activity
             
             //close DB
             db.close();
+            RQS_1++;
         }
         catch(Exception e)
         {
@@ -212,10 +221,11 @@ public class AlarmTimer extends Activity
         try
         {
         	db = DBhelper.getReadableDatabase();
-	        Cursor c = db.query("ALARMDATA", new String[] {"alarm_id", "time_data"}, null, null, null, null, null);
+	        Cursor c = DBhelper.alarm_GetAllRows();
 	        
-	        int alarm_Id;
-	        long time_data;
+	        int Id = 0;
+	        long time = 0;
+	        long Interval = 0;
 	        AlarmManager alarmManager;
 	        Intent intent;
 	        PendingIntent pendingIntent;
@@ -225,17 +235,19 @@ public class AlarmTimer extends Activity
 	        
 	        for (int i = 0; i < numRows; ++i) 
 	        {
-	        	alarm_Id = c.getInt(0);
-	        	time_data = Long.parseLong(c.getString(1));
+	        	Id = c.getInt(0);
+	        	time = Long.parseLong(c.getString(1));
+	        	Interval = Long.parseLong(c.getString(2));
 
 	        	intent = new Intent(getBaseContext(), AlarmOnReceive.class);
-	            pendingIntent = PendingIntent.getBroadcast(getBaseContext(), alarm_Id, intent, 0);
+	            pendingIntent = PendingIntent.getBroadcast(getBaseContext(), Id, intent, 0);
 	            
 	            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-	            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time_data, AlarmManager.INTERVAL_DAY, pendingIntent);
+	            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, Interval, pendingIntent);
 	            
 	            c.moveToNext();
 	        }
+	        RQS_1 = Id + 1;
 	        c.close();
 	        
 	        Toast.makeText(getBaseContext(), String.valueOf(numRows) + " Alarms Recreated!", Toast.LENGTH_SHORT).show();

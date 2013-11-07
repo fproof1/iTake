@@ -33,8 +33,15 @@ public class AlarmReceiver extends Activity
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-        		WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        		WindowManager.LayoutParams.FLAG_FULLSCREEN);       
+    }
+	
+	@Override
+    protected void onStart() 
+    {
+        super.onStart();
+        // The activity is about to become visible.
+        
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AlarmReceiver.this);
         alertDialogBuilder.setTitle("Medicine Alert")
         				  .setMessage("Insert Medication(s) Name Here")
@@ -73,13 +80,6 @@ public class AlarmReceiver extends Activity
         }); // end alertDialog.setButton.
         alertDialogBuilder.show();  
         playSound(AlarmReceiver.this, getAlarmUri());
-    }
-	
-	@Override
-    protected void onStart() 
-    {
-        super.onStart();
-        // The activity is about to become visible.
     }
     @Override
     protected void onResume() 
@@ -158,4 +158,34 @@ public class AlarmReceiver extends Activity
         }
         return alert;
     }
+    
+    // Update Alarm Time Data in Database
+   /* public void alarmUpdate(int Id)
+    {
+    	iTakeDatabase DBhelper;
+        SQLiteDatabase db;
+        DBhelper = new iTakeDatabase(this);
+    	try
+        {             		
+            //put DB in write mode
+            db = DBhelper.getWritableDatabase();          		
+
+            //insert variables into DB
+            DBhelper.alarm_updateRow(Id, String.valueOf(alarmtime.getTimeInMillis() + Interval), 
+            		String.valueOf(Interval)); 
+            		
+            Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
+        	PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
+        	AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        	alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), 
+        			AlarmManager.INTERVAL_DAY, pendingIntent);
+
+            //close DB
+            db.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Database Update Error: " + e.getLocalizedMessage());
+        }
+    }*/
 }
