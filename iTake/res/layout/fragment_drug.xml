@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_medication_label" />
+
+  <LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="16dp"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+      <EditText
+          android:id="@+id/drug_title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="16dp"
+          android:ems="10"
+          android:hint="@string/drug_name_hint" >
+
+          <requestFocus />
+      </EditText>
+       <EditText
+          android:id="@+id/drug_dosage"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="16dp"
+          android:ems="10"
+          android:hint="@string/drug_dosage_hint" >
+
+          
+      </EditText>
+       <EditText
+          android:id="@+id/drug_frequency"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="16dp"
+          android:ems="10"
+          android:hint="@string/drug_frequency_hint" >
+
+          
+      </EditText>
+       <EditText
+          android:id="@+id/drug_purpose"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="16dp"
+          android:ems="10"
+          android:hint="@string/drug_purpose_hint" >
+
+          
+      </EditText>
+      
+       <EditText
+          android:id="@+id/drug_prescriber"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="16dp"
+          android:ems="10"
+          android:hint="@string/drug_prescriber_hint" >
+
+          
+      </EditText>
+
+       <Switch
+           android:id="@+id/otc_switch"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="OTC"
+           android:textOff="@string/no"
+           android:textOn="@string/yes" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/drug_imageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@android:color/darker_gray"
+            android:cropToPadding="true"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/drug_imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_camera" />
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <Button
+      android:id="@+id/alarm_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Set Reminder" />
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/drug_details_label"
+    style="?android:listSeparatorTextViewStyle"
+    />
+ 
+  <Button
+      android:id="@+id/drug_save"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp" 
+      android:text="Save Medication"/>
+
+</LinearLayout>
+

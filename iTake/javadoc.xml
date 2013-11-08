@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="libs/android-support-v4.jar" destdir="doc" doctitle="iTake Documentation" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" source="1.7" sourcefiles="src/com/example/itake/AlarmTimer.java" sourcepath="src;gen" splitindex="true" use="true" version="true">
+            <link href="file:/C:/Android Development/adt-bundle-windows-x86_64-20130729/sdk/docs/reference"/>
+        </javadoc>
+    </target>
+</project>

@@ -1,0 +1,46 @@
+package com.FMRAKLF.itake;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+public class Disclaimer {
+	
+	public static AlertDialog show(final Activity activity) {
+		final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+		if (sp.getBoolean("disclaimer", false)) return null;
+		
+		TextView tv = new TextView(activity);
+		tv.setText(DISCLAIMER);
+		tv.setPadding(5, 5, 5, 5);
+		ScrollView sv = new ScrollView(activity);
+		sv.addView(tv);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+		builder.setTitle("Disclaimer")
+			   .setView(sv)
+//			   .setIcon(android.R.drawable.ic_dialog_info)
+		       .setCancelable(false)
+		       .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   sp.edit().putBoolean("disclaimer", true).commit();
+		        	   dialog.cancel();
+		           }
+		       })
+		       .setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   activity.finish();
+		           }
+		       });
+		AlertDialog alert = builder.create();
+		alert.show();
+		return alert;
+	}
+	
+	private static final String DISCLAIMER = "THIS SOFTWARE IS PROVIDED \"AS IS\" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.";
+
+}

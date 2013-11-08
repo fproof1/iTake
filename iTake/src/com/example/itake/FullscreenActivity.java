@@ -51,13 +51,10 @@ public class FullscreenActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
 
-        setContentView(R.layout.welcomsplash.xml);
-=======
+        setContentView(R.layout.welcomsplash);
         
         setContentView(R.layout.activity_fullscreen);
->>>>>>> c6b22093d3aa17ac09a1b8c64434f87933cc72a2
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);

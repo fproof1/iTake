@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Display Settings">
+        <ListPreference android:entries="@array/time_option_arr" 
+            android:title="Display Time" 
+            android:key="time_option" 
+            android:summary="Actual" 
+            android:defaultValue="0" 
+            android:entryValues="@array/val_arr" />
+        
+        <ListPreference android:entries="@array/date_range_arr"
+            android:title="Date Range" 
+            android:key="date_range" 
+            android:summary="Daily" 
+            android:defaultValue="0" 
+            android:entryValues="@array/val_arr" />
+        
+        <ListPreference android:entries="@array/date_format_arr" 
+            android:title="Date Format" 
+            android:key="date_format" 
+            android:summary="yyyy-M-d" 
+            android:defaultValue="yyyy-M-d" 
+            android:entryValues="@array/date_format_arr" />
+        
+        <CheckBoxPreference android:title="Time Format" 
+            android:key="time_format" 
+            android:summary="Use 24-hour format" 
+            android:defaultValue="true" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Notification Settings">
+        
+        <CheckBoxPreference android:title="Vibrate" 
+            android:key="vibrate_pref" 
+            android:summary="Vibrate on notification" 
+            android:defaultValue="true" />
+        
+        <RingtonePreference android:title="Set Ringtone" 
+            android:key="ringtone_pref" 
+            android:summary="Default" 
+            android:ringtoneType="all" 
+            android:showDefault="true" 
+            android:showSilent="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

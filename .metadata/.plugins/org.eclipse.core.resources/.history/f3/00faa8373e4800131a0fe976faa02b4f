@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+  	xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" 
+        android:background="#ff3d4935" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content">
+        
+        <EditText android:id="@id/msg_et" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:hint="Message" 
+            android:maxLines="2" 
+            android:ems="10" />
+        
+        <CheckBox android:id="@id/sound_cb" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="Play ringtone" />
+        
+        <ToggleButton android:textColor="#ffffffff" 
+            android:layout_gravity="center_horizontal" 
+            android:id="@id/toggleButton1" 
+            android:background="@drawable/type_selector" 
+            android:padding="5.0dip" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:textOn=" Once    Repeat " 
+            android:textOff=" Once    Repeat " 
+            android:onClick="onClick" />
+        
+        <ViewSwitcher android:id="@id/view_switcher" 
+            android:background="#ff5c755e" 
+            android:paddingLeft="5.0dip" 
+            android:paddingTop="10.0dip" 
+            android:paddingRight="5.0dip" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content">
+            
+            <include android:layout_width="fill_parent" 
+                android:layout_height="fill_parent" 
+                layout="@layout/include_onetime" />
+            
+            <include android:layout_width="fill_parent" 
+                android:layout_height="fill_parent" 
+                layout="@layout/include_repeating" />
+        </ViewSwitcher>
+        
+        <LinearLayout android:gravity="right" 
+            android:background="#ff5c755e" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content">
+            
+            <ImageButton android:background="@null" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:src="@drawable/ok" 
+                android:onClick="create" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

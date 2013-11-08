@@ -1,0 +1,140 @@
+package com.FMRAKLF.itake;
+
+public final class R
+{
+  public static final class array
+  {
+    public static final int date_format_arr = 2131034118;
+    public static final int date_range_arr = 2131034113;
+    public static final int spinner1_arr = 2131034115;
+    public static final int spinner2_arr = 2131034116;
+    public static final int spinner3_arr = 2131034117;
+    public static final int time_option_arr = 2131034112;
+    public static final int val_arr = 2131034114;
+  }
+
+  public static final class attr
+  {
+  }
+
+  public static final class color
+  {
+    public static final int activ = 2131099649;
+    public static final int bkg = 2131099648;
+    public static final int bkg2 = 2131099651;
+    public static final int inactiv = 2131099650;
+  }
+
+  public static final class drawable
+  {
+    public static final int add = 2130837504;
+    public static final int bg_repeat = 2130837505;
+    public static final int ic_dialog_menu_generic = 2130837506;
+    public static final int ic_launcher = 2130837507;
+    public static final int left = 2130837508;
+    public static final int line = 2130837509;
+    public static final int noisy_grid = 2130837510;
+    public static final int ok = 2130837511;
+    public static final int onetime = 2130837512;
+    public static final int pencil = 2130837513;
+    public static final int preferences = 2130837514;
+    public static final int range = 2130837515;
+    public static final int repeating = 2130837516;
+    public static final int right = 2130837517;
+    public static final int title_bar_shadow = 2130837518;
+    public static final int type_selector = 2130837519;
+  }
+
+  public static final class id
+  {
+    public static final int attime_lb = 2131361802;
+    public static final int attime_tv = 2131361803;
+    public static final int datePicker = 2131361796;
+    public static final int date_tv = 2131361833;
+    public static final int days_et = 2131361820;
+    public static final int fromdate_lb = 2131361798;
+    public static final int fromdate_tv = 2131361799;
+    public static final int heading_tv = 2131361824;
+    public static final int hours_et = 2131361819;
+    public static final int imageButton1 = 2131361825;
+    public static final int imageButton2 = 2131361826;
+    public static final int imageButton3 = 2131361827;
+    public static final int imageButton4 = 2131361829;
+    public static final int list_view = 2131361830;
+    public static final int menu_bar = 2131361823;
+    public static final int menu_delete = 2131361837;
+    public static final int menu_delete_all = 2131361839;
+    public static final int menu_delete_repeating = 2131361838;
+    public static final int menu_edit = 2131361836;
+    public static final int mins_et = 2131361818;
+    public static final int month_tv = 2131361831;
+    public static final int months_et = 2131361821;
+    public static final int msg_et = 2131361792;
+    public static final int msg_tv = 2131361834;
+    public static final int radio0 = 2131361805;
+    public static final int radio1 = 2131361806;
+    public static final int radioGroup = 2131361804;
+    public static final int range_tv = 2131361828;
+    public static final int relativeLayout3 = 2131361807;
+    public static final int relativeLayout4 = 2131361812;
+    public static final int sound_cb = 2131361793;
+    public static final int spinner1 = 2131361808;
+    public static final int spinner2 = 2131361809;
+    public static final int spinner3 = 2131361811;
+    public static final int textView10 = 2131361815;
+    public static final int textView11 = 2131361816;
+    public static final int textView12 = 2131361817;
+    public static final int textView7 = 2131361810;
+    public static final int textView8 = 2131361813;
+    public static final int textView9 = 2131361814;
+    public static final int timePicker = 2131361797;
+    public static final int time_tv = 2131361835;
+    public static final int todate_lb = 2131361800;
+    public static final int todate_tv = 2131361801;
+    public static final int toggleButton1 = 2131361794;
+    public static final int view_switcher = 2131361795;
+    public static final int year_tv = 2131361832;
+    public static final int years_et = 2131361822;
+  }
+
+  public static final class layout
+  {
+    public static final int add = 2130903040;
+    public static final int edit = 2130903041;
+    public static final int include_onetime = 2130903042;
+    public static final int include_repeating = 2130903043;
+    public static final int main = 2130903044;
+    public static final int row = 2130903045;
+  }
+
+  public static final class menu
+  {
+    public static final int context_menu = 2131296256;
+    public static final int options_menu = 2131296257;
+  }
+
+  public static final class string
+  {
+    public static final int app_name = 2131165184;
+    public static final int delete = 2131165186;
+    public static final int delete_all = 2131165188;
+    public static final int delete_repeating = 2131165187;
+    public static final int edit = 2131165185;
+  }
+
+  public static final class style
+  {
+    public static final int TransparentListView = 2131230721;
+    public static final int app_theme = 2131230720;
+  }
+
+  public static final class xml
+  {
+    public static final int settings = 2130968576;
+  }
+}
+
+/* Location:           C:\Users\WhiteDivinity\Desktop\remindme\classes-dex2jar.jar
+ * Qualified Name:     com.appsrox.remindme.R
+ * JD-Core Version:    0.6.2
+ */

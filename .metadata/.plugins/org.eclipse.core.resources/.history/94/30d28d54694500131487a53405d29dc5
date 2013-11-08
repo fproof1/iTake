@@ -1,0 +1,65 @@
+package com.FMRAKLF.itake;
+
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
+
+@SuppressWarnings("deprecation")
+public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
+{
+	private void updatePreference(String paramString)
+	{
+		Preference localPreference = findPreference(paramString);
+		if ((localPreference instanceof ListPreference))
+			localPreference.setSummary(((ListPreference)localPreference).getEntry());
+		Ringtone localRingtone;
+		do
+		{
+			do
+			{
+				return;
+			} while (!"ringtone_pref".equals(paramString));
+      localRingtone = RingtoneManager.getRingtone(this, Uri.parse(RemindMe.getRingtone()));
+    } while (localRingtone == null);
+    localPreference.setSummary(localRingtone.getTitle(this));
+  }
+
+  private void updatePreferences()
+  {
+    updatePreference("time_option");
+    updatePreference("date_range");
+    updatePreference("date_format");
+    updatePreference("ringtone_pref");
+  }
+
+public void onCreate(Bundle paramBundle)
+  {
+    super.onCreate(paramBundle);
+    addPreferencesFromResource(2130968576);
+  }
+
+  protected void onPause()
+  {
+    super.onPause();
+    getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+  }
+
+  protected void onResume()
+  {
+    super.onResume();
+    getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    updatePreferences();
+  }
+
+  public void onSharedPreferenceChanged(SharedPreferences paramSharedPreferences, String paramString)
+  {
+    updatePreference(paramString);
+  }
+}
