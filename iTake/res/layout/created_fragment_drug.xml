@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/drug_title"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/drug_edit" />
+
+    <TextView
+        android:id="@+id/textView1"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="@string/drug_notes_label" />
+
+    <Button
+        android:id="@+id/drug_edit"
+        android:layout_width="89dp"
+        android:layout_height="38dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:text="Edit" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="19dp" >
+
+        <LinearLayout
+            android:layout_width="211dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/drug_dosage_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ems="10"
+                android:hint="@string/drug_dosage_hint" />
+
+            <TextView
+                android:id="@+id/drug_dosage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ems="10" />
+
+            <TextView
+                android:id="@+id/drug_frequency_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ems="10"
+                android:hint="@string/drug_frequency_hint" />
+
+            <TextView
+                android:id="@+id/drug_frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ems="10" />
+
+            <TextView
+                android:id="@+id/drug_purpose_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ems="10"
+                android:hint="@string/drug_purpose_hint" />
+
+            <TextView
+                android:id="@+id/drug_purpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ems="10" />
+
+            <TextView
+                android:id="@+id/drug_prescriber_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ems="10"
+                android:hint="@string/drug_prescriber_hint" />
+
+            <TextView
+                android:id="@+id/drug_prescriber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ems="10" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/drug_imageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/linearLayout1"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/darker_gray"
+        android:cropToPadding="false"
+        android:scaleType="centerInside" />
+
+</RelativeLayout>
