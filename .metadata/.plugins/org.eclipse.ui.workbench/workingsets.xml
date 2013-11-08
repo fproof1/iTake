@@ -15,4 +15,9 @@
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1383618765931_12" label="Window Working Set" name="Aggregate for window 1383618765930"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1383709285003_13" label="Window Working Set" name="Aggregate for window 1383709285002"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1383891227024_14" label="Window Working Set" name="Aggregate for window 1383891227024"/>
+<<<<<<< HEAD
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1383919997194_15" label="Window Working Set" name="Aggregate for window 1383919997194"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1383920150567_16" label="Window Working Set" name="Aggregate for window 1383920150567"/>
+=======
+>>>>>>> parent of e79e94c... Alarm Update
 </workingSetManager>
