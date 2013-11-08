@@ -1,0 +1,68 @@
+package com.example.itake;
+
+import android.app.AlarmManager;
+import android.app.IntentService;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
+
+public class AlarmService extends IntentService 
+{		
+	private static final String TAG = "AlarmService";
+	
+	public static final String CREATE = "CREATE";
+	public static final String CANCEL = "CANCEL";
+
+	public static final String COL_ALARMID = "alarm_id";
+	
+	private IntentFilter matcher;
+
+	public AlarmService() 
+	{
+		super(TAG);
+		matcher = new IntentFilter();
+		matcher.addAction(CREATE);
+		matcher.addAction(CANCEL);
+	}
+
+	@Override
+	protected void onHandleIntent(Intent intent) 
+	{
+		String action = intent.getAction();
+		String alarmId = intent.getStringExtra(COL_ALARMID);
+
+		if (matcher.matchAction(action)) 
+		{
+			if (CREATE.equals(action)) 
+			{
+				execute(CREATE, alarmId);
+			}
+			
+			if (CANCEL.equals(action)) 
+			{
+				execute(CANCEL, alarmId);
+			}			
+		}
+	}
+
+	/**
+	 * @param action
+	 * @param args {alarmId}
+	 */	
+	private void execute(String action, String args) 
+	{		
+		Intent i;
+		PendingIntent pi;				
+		
+		Intent i = new Intent(getBaseContext(), AlarmReceiver.class); 
+	    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+	    context.startActivity(i);
+		
+		String alarmId = ((args != null) && (args.length() > 0)) ? args : null;
+
+		i = new Intent(this, AlarmReceiver.class);
+		pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);								
+	}
+}

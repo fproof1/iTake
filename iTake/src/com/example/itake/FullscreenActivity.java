@@ -1,14 +1,15 @@
 package com.example.itake;
 
-import com.example.itake.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.example.itake.util.SystemUiHider;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -16,7 +17,8 @@ import android.view.View;
  *
  * @see SystemUiHider
  */
-public class FullscreenActivity extends Activity {
+public class FullscreenActivity extends Activity 
+{
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -43,13 +45,19 @@ public class FullscreenActivity extends Activity {
     /**
      * The instance of the {@link SystemUiHider} for this activity.
      */
-    private SystemUiHider mSystemUiHider;
+    private SystemUiHider mSystemUiHider; 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) 
+    {
         super.onCreate(savedInstanceState);
+<<<<<<< HEAD
 
         setContentView(R.layout.welcomsplash.xml);
+=======
+        
+        setContentView(R.layout.activity_fullscreen);
+>>>>>>> c6b22093d3aa17ac09a1b8c64434f87933cc72a2
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
@@ -59,37 +67,45 @@ public class FullscreenActivity extends Activity {
         mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
         mSystemUiHider.setup();
         mSystemUiHider
-                .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
+                .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() 
+                {
                     // Cached values.
                     int mControlsHeight;
                     int mShortAnimTime;
 
                     @Override
                     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-                    public void onVisibilityChange(boolean visible) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+                    public void onVisibilityChange(boolean visible) 
+                    {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
+                        {
                             // If the ViewPropertyAnimator API is available
                             // (Honeycomb MR2 and later), use it to animate the
                             // in-layout UI controls at the bottom of the
                             // screen.
-                            if (mControlsHeight == 0) {
+                            if (mControlsHeight == 0) 
+                            {
                                 mControlsHeight = controlsView.getHeight();
                             }
-                            if (mShortAnimTime == 0) {
+                            if (mShortAnimTime == 0) 
+                            {
                                 mShortAnimTime = getResources().getInteger(
                                         android.R.integer.config_shortAnimTime);
                             }
                             controlsView.animate()
                                     .translationY(visible ? 0 : mControlsHeight)
                                     .setDuration(mShortAnimTime);
-                        } else {
+                        } 
+                        else
+                        {
                             // If the ViewPropertyAnimator APIs aren't
                             // available, simply show or hide the in-layout UI
                             // controls.
                             controlsView.setVisibility(visible ? View.VISIBLE : View.GONE);
                         }
 
-                        if (visible && AUTO_HIDE) {
+                        if (visible && AUTO_HIDE) 
+                        {
                             // Schedule a hide().
                             delayedHide(AUTO_HIDE_DELAY_MILLIS);
                         }
@@ -97,12 +113,21 @@ public class FullscreenActivity extends Activity {
                 });
 
         // Set up the user interaction to manually show or hide the system UI.
-        contentView.setOnClickListener(new View.OnClickListener() {
+        contentView.setOnClickListener(new View.OnClickListener() 
+        {
             @Override
-            public void onClick(View view) {
-                if (TOGGLE_ON_CLICK) {
-                    mSystemUiHider.toggle();
-                } else {
+            public void onClick(View view) 
+            {
+                if (TOGGLE_ON_CLICK) 
+                {
+                   // mSystemUiHider.toggle();
+                   // setContentView(R.layout.user_reg); // Testing to see what happens
+                	Intent i = new Intent(getApplicationContext(), AlarmTimer.class);
+                	startActivity(i);
+                } 
+                else 
+                {
+                	//setContentView(R.layout.user_reg);
                     mSystemUiHider.show();
                 }
             }
@@ -115,7 +140,8 @@ public class FullscreenActivity extends Activity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
+    protected void onPostCreate(Bundle savedInstanceState) 
+    {
         super.onPostCreate(savedInstanceState);
 
         // Trigger the initial hide() shortly after the activity has been
@@ -130,10 +156,13 @@ public class FullscreenActivity extends Activity {
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
-    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() 
+    {
         @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
+        public boolean onTouch(View view, MotionEvent motionEvent) 
+        {
+            if (AUTO_HIDE) 
+            {
                 delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
             return false;
@@ -141,9 +170,11 @@ public class FullscreenActivity extends Activity {
     };
 
     Handler mHideHandler = new Handler();
-    Runnable mHideRunnable = new Runnable() {
+    Runnable mHideRunnable = new Runnable()
+    {
         @Override
-        public void run() {
+        public void run() 
+        {
             mSystemUiHider.hide();
         }
     };
@@ -152,7 +183,8 @@ public class FullscreenActivity extends Activity {
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
      */
-    private void delayedHide(int delayMillis) {
+    private void delayedHide(int delayMillis) 
+    {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }

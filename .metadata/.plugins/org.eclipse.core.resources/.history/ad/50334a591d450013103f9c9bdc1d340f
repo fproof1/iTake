@@ -1,0 +1,40 @@
+package com.example.itake;
+
+import android.R;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Bundle;
+import android.preference.PreferenceActivity;
+
+public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener 
+{
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
+		addPreferencesFromResource(android.R.layout.settings);
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		getPreferenceScreen().getSharedPreferences()
+		.registerOnSharedPreferenceChangeListener(this);
+		// TODO update preferences
+	}
+	
+	@Override
+	protected void onPause() 
+	{
+		super.onPause();
+		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+	}    
+	
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) 
+	{
+		updatePreference(key);
+	}   
+}

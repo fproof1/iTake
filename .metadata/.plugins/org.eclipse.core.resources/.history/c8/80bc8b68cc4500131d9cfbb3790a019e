@@ -1,0 +1,17 @@
+package com.example.itake;
+
+import android.app.IntentService;
+import android.content.Intent;
+
+public class AlarmService extends IntentService 
+{		
+	private static final String TAG = "AlarmService";
+
+	public AlarmService() 
+	{
+		super(TAG);
+		Intent i = new Intent(this, AlarmReceiver.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+	    startActivity(i);
+	}
+}

@@ -1,0 +1,121 @@
+package com.example.itake;
+
+import java.util.Calendar;
+
+import android.R;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
+import android.widget.TimePicker;
+import android.widget.ViewSwitcher;
+
+public class AddAlarmActivity extends Activity 
+{	 
+    private ViewSwitcher vs;
+    private RadioGroup rg;
+    private RelativeLayout rl3;
+    private RelativeLayout rl4;
+     
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setTitle("New Reminder");
+        setContentView(R.layout.add);
+         
+        vs = (ViewSwitcher) findViewById(R.id.view_switcher);
+        rg = (RadioGroup) findViewById(R.id.radioGroup);
+        rl3 = (RelativeLayout) findViewById(R.id.relativeLayout3);
+        rl4 = (RelativeLayout) findViewById(R.id.relativeLayout4);      
+         
+        rg.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) 
+            {
+                switch(checkedId) 
+                {
+	                case R.id.radio0:
+	                    rl3.setVisibility(View.VISIBLE);
+	                    rl4.setVisibility(View.GONE);
+	                    break;
+	                case R.id.radio1:
+	                    rl4.setVisibility(View.VISIBLE);
+	                    rl3.setVisibility(View.GONE);                   
+	                    break;                  
+                }
+            }
+        });
+    }
+     
+    public void onClick(View v) 
+    {
+        switch (v.getId()) 
+        {
+	        case R.id.toggleButton:
+	            vs.showNext();
+	            break;          
+        }
+    }
+    
+    @Override
+    protected Dialog onCreateDialog(final int id) 
+    {
+        Calendar cal = Calendar.getInstance();
+        switch(id)
+        {
+	        case DIALOG_ATTIME:
+	            TimePickerDialog.OnTimeSetListener mTimeSetListener =
+	                new TimePickerDialog.OnTimeSetListener() 
+	            	{
+	                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) 
+	                    {
+	                        // TODO capture time
+	                    }
+	                };
+	            return new TimePickerDialog(this, mTimeSetListener, cal.get(Calendar.HOUR_OF_DAY), 
+	                                            cal.get(Calendar.MINUTE), false);
+	         
+	        case DIALOG_FROMDATE:
+	        case DIALOG_TODATE:
+	            DatePickerDialog.OnDateSetListener dateListener =
+	                new DatePickerDialog.OnDateSetListener() 
+	            	{
+	                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) 
+	                    {
+	                        // TODO capture date
+	                    }
+	                };
+	            return new DatePickerDialog(this, dateListener, cal.get(Calendar.YEAR), 
+	                                            cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+        }                
+        return super.onCreateDialog(id);
+    }
+     
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) 
+    {
+        super.onPrepareDialog(id, dialog);
+         
+        switch(id) 
+        {
+	        case DIALOG_ATTIME:
+	            ((TimePickerDialog)dialog).updateTime(hourOfDay, minute);           
+	            break;
+	             
+	        case DIALOG_FROMDATE:
+	            ((DatePickerDialog)dialog).updateDate(year, monthOfYear, dayOfMonth);           
+	            break;
+	             
+	        case DIALOG_TODATE:
+	            ((DatePickerDialog)dialog).updateDate(year, monthOfYear, dayOfMonth);           
+	            break;
+        }
+    }
+} 

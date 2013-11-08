@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/blue_back"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="40dp" >
+
+    <TextView
+        android:id="@+id/welcometv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp"
+        android:paddingLeft="125dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white_back"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/loginprompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:text="@string/login_prompt"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/emaillogin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_back"
+        android:ems="10"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:textSize="20sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/passwordlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white_back"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/loginbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="260dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/grey_button"
+        android:minWidth="100dp"
+        android:text="@string/login"
+        android:width="100dip" />
+
+    <Button
+        android:id="@+id/newuserbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@color/grey_button"
+        android:text="@string/new_user" />
+
+</LinearLayout>
