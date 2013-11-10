@@ -215,7 +215,7 @@ public class DrugFragment extends Fragment {
 			mAlarmButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					Intent i = new Intent(getActivity(), AlarmTimer.class);
-//					 i.putExtra(AlarmTimer.DRUG_ALARM_ID, mDrug.getId());
+					AlarmTimer.DRUG_ALARM_ID =  mDrug.getId().toString();
 					startActivity(i);
 				}
 			});

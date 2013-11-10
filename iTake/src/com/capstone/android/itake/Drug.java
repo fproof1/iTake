@@ -1,6 +1,7 @@
 package com.capstone.android.itake;
 
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +14,9 @@ public class Drug {
 	private static final String JSON_PURPOSE = "purpose";
 	private static final String JSON_PRESCRIBER = "prescriber";
 	private static final String JSON_PHOTO = "photo";
-
+	
+	private static final AtomicInteger AlarmId = new AtomicInteger();
+	
 	private UUID mId;
 	private String mTitle;
 	private String mDosage;
@@ -22,7 +25,8 @@ public class Drug {
 	public boolean mCreated;
 	private Photo mPhoto;
 
-	public Drug() {
+	public Drug() 
+	{
 		mId = UUID.randomUUID();
 	}
 
@@ -99,6 +103,10 @@ public class Drug {
 	public void setPhoto(Photo p) {
 		mPhoto = p;
 	}
-
+	
+	public int getAlarmId () {
+		AlarmId.getAndIncrement();
+		return AlarmId.intValue();
+	}
 
 }

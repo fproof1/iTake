@@ -1,8 +1,5 @@
 package com.capstone.android.itake;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,23 +10,17 @@ import android.util.Log;
 
 public class iTakeDatabase extends SQLiteOpenHelper
 {
-    class Row extends Object 
-    {
-        public int alarm_Id;
-        public String time_data;
-        public String alarm_Interval;
-    }
-    
-    private static final String DATABASE_NAME = "iTake.db";
+	private static final String DATABASE_NAME = "iTake.db";
 
     private static final String ALARM_DATABASE_TABLE = "ALARMDATA";
 
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE = "CREATE TABLE ALARMDATA ("
-    	+ "alarm_id INTEGER PRIMARY KEY AUTOINCREMENT, " // Alarm ID Number
+    	+ "drug_id LONGTEXT NOT NULL, " // Drug ID Number
     	+ "time_data TEXT NOT NULL, " // Time for Alarm to begin
-    	+ "alarm_Interval TEXT NOT NULL);"; // Alarm Interval
+    	+ "alarm_interval TEXT NOT NULL, " // Alarm Interval
+    	+ "alarm_id INTEGER);"; // Alarm ID Number
 
     private SQLiteDatabase db;
 
@@ -55,81 +46,49 @@ public class iTakeDatabase extends SQLiteOpenHelper
         db.close();
 	}
 
-    public void alarm_createRow(String time, String Interval) 
+    public void alarm_createRow(String Id, String time, String Interval, int AlarmID) 
     {
-    	db = this.getWritableDatabase();
         ContentValues initialValues = new ContentValues();
+        initialValues.put("drug_id", Id);
         initialValues.put("time_data", time);
-        initialValues.put("alarm_Interval", Interval);
+        initialValues.put("alarm_interval", Interval);
+        initialValues.put("alarm_id", AlarmID);
+        db = this.getWritableDatabase();
         db.insert(ALARM_DATABASE_TABLE, null, initialValues);
         db.close();
     }
 
-    public void alarm_deleteRow(int rowId) 
+    public void alarm_deleteRow(String rowId) 
     {
     	db = this.getWritableDatabase();
-        db.delete(ALARM_DATABASE_TABLE, "alarm_id=" + rowId, null);
+        db.delete(ALARM_DATABASE_TABLE, "drug_id="+ "\"" + rowId + "\"", null);
         db.close();
     }
-
-    public List<Row> alarm_fetchAllRows() 
+ 
+    public void alarm_updateRow(String rowId, String time, String Interval) 
     {
-        ArrayList<Row> ret = new ArrayList<Row>();
+        ContentValues args = new ContentValues();
+        args.put("time_data", time);
+        args.put("alarm_interval", Interval);
+        db = this.getWritableDatabase();
+        db.update(ALARM_DATABASE_TABLE, args, "drug_id=" + "\"" + rowId + "\"", null);
+        db.close();
+    }
+    
+    public Cursor alarm_GetRow(String rowId) 
+    {
         try 
         {
         	db = this.getReadableDatabase();
-            Cursor c = db.query(ALARM_DATABASE_TABLE, new String[] {"alarm_id", "time_data", "alarm_Interval"}, 
-            		null, null, null, null, null);
-            int numRows = c.getCount();
-            c.moveToFirst();
-            for (int i = 0; i < numRows; ++i) 
-            {
-                Row row = new Row();
-                row.alarm_Id = c.getInt(0);
-                row.time_data = c.getString(1);
-                row.alarm_Interval = c.getString(2);
-                ret.add(row);
-                c.moveToNext();
-            }
-            c.close();
+        	Cursor c = db.query(ALARM_DATABASE_TABLE, new String[] {"time_data", "alarm_interval", "alarm_id", "drug_id"}, 
+        			"drug_id=" + "\"" + rowId + "\"", null, null, null, null);
+        	return c;
         } 
         catch (SQLException e) 
         {
             Log.e("Exception on query", e.toString());
+            return null;
         }
-        return ret;
-    }
-
-    public Row alarm_fetchRow(int rowId) 
-    {
-        Row row = new Row();
-        db = this.getReadableDatabase();
-        Cursor c = db.query(true, ALARM_DATABASE_TABLE, new String[] {"time_data", "alarm_Interval"},
-        		"alarm_id=" + rowId, null, null, null, null, null);
-        if (c.getCount() > 0) 
-        {
-            c.isFirst();
-            row.time_data = c.getString(1);
-            row.alarm_Interval = c.getString(2);
-            return row;
-        } 
-        else 
-        {
-            row.time_data = null;
-            row.alarm_Interval = null;
-        }
-        c.close();
-        return row;
-    }
-
-    public void alarm_updateRow(int rowId, String time, String Interval) 
-    {
-    	db = this.getWritableDatabase();
-        ContentValues args = new ContentValues();
-        args.put("time_data", time);
-        args.put("alarm_Interval", Interval);
-        db.update(ALARM_DATABASE_TABLE, args, "alarm_id=" + rowId, null);
-        db.close();
     }
  
     public Cursor alarm_GetAllRows() 
@@ -137,7 +96,7 @@ public class iTakeDatabase extends SQLiteOpenHelper
         try 
         {
         	db = this.getReadableDatabase();
-        	Cursor c = db.query(ALARM_DATABASE_TABLE, new String[] {"alarm_id", "time_data", "alarm_Interval"}, 
+        	Cursor c = db.query(ALARM_DATABASE_TABLE, new String[] {"time_data", "alarm_interval", "alarm_id", "drug_id"}, 
             		null, null, null, null, null);
         	return c;
         } 

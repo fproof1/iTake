@@ -6,9 +6,13 @@ package com.capstone.android.itake;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -17,6 +21,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 /**
  * @author Wolfpack16 (R. Alex Kane)
@@ -24,16 +29,22 @@ import android.view.WindowManager;
  */
 public class AlarmReceiver extends Activity 
 {
+	public static String ALARM_ID;
+	
 	private MediaPlayer mMediaPlayer; 
 	private Vibrator phoneVibrate;
 	private AudioManager audioManager;
+	
+	iTakeDatabase DBhelper;
 
 	public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-        		WindowManager.LayoutParams.FLAG_FULLSCREEN);       
+        		WindowManager.LayoutParams.FLAG_FULLSCREEN);  
+        
+        DBhelper = new iTakeDatabase(this);
     }
 	
 	@Override
@@ -60,6 +71,7 @@ public class AlarmReceiver extends Activity
         		{
 	        		mMediaPlayer.stop();
         		}
+        		alarmUpdate(ALARM_ID);
                 AlarmReceiver.this.finish();
             } //end onClick.
         }); // end alertDialog.setButton.
@@ -76,6 +88,7 @@ public class AlarmReceiver extends Activity
         		{
 	        		mMediaPlayer.stop();
         		}
+        		//
                 AlarmReceiver.this.finish();
             } //end onClick.
         }); // end alertDialog.setButton.
@@ -161,32 +174,38 @@ public class AlarmReceiver extends Activity
     }
     
     // Update Alarm Time Data in Database
-   /* public void alarmUpdate(int Id)
+    public void alarmUpdate(String Id)
     {
-    	iTakeDatabase DBhelper;
-        SQLiteDatabase db;
-        DBhelper = new iTakeDatabase(this);
+    	Cursor c = DBhelper.alarm_GetRow(Id);
     	try
-        {             		
-            //put DB in write mode
-            db = DBhelper.getWritableDatabase();          		
-
-            //insert variables into DB
-            DBhelper.alarm_updateRow(Id, String.valueOf(alarmtime.getTimeInMillis() + Interval), 
-            		String.valueOf(Interval)); 
+        {    
+    		if(c.getCount() > 0 && c != null)
+    		{
+    			c.moveToFirst();
+    			// Update variables into DB
+    			DBhelper.alarm_updateRow(Id, String.valueOf(Long.parseLong(c.getString(0)) + Long.parseLong(c.getString(1))), 
+    					c.getString(1)); 
             		
-            Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
-        	PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
-        	AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        	alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), 
-        			AlarmManager.INTERVAL_DAY, pendingIntent);
-
-            //close DB
-            db.close();
+	            Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
+	        	PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), c.getInt(2), 
+	        			intent, PendingIntent.FLAG_UPDATE_CURRENT);
+	        	
+	        	AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+	        	alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 
+	        			(Long.parseLong(c.getString(0)) + Long.parseLong(c.getString(1))), 
+	        			Long.parseLong(c.getString(1)), pendingIntent);
+	        	
+	        	Toast.makeText(getBaseContext(), "Alarm Updated Successfully!", Toast.LENGTH_SHORT).show();
+    		}
+    		else
+    		{
+    			Toast.makeText(getBaseContext(), "Alarm Update Failed! ID =" + Id, Toast.LENGTH_SHORT).show();
+    		}
         }
         catch(Exception e)
         {
             System.out.println("Database Update Error: " + e.getLocalizedMessage());
         }
-    }*/
+    	c.close();
+    }
 }
