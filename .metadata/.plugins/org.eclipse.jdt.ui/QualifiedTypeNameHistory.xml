@@ -22,7 +22,6 @@
 <fullyQualifiedTypeName name="android.view.ContextMenu"/>
 <fullyQualifiedTypeName name="android.widget.ListView"/>
 <fullyQualifiedTypeName name="android.widget.EditText"/>
-<fullyQualifiedTypeName name="android.content.DialogInterface"/>
 <fullyQualifiedTypeName name="android.text.TextUtils"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView"/>
@@ -56,8 +55,9 @@
 <fullyQualifiedTypeName name="android.preference.PreferenceActivity"/>
 <fullyQualifiedTypeName name="java.util.concurrent.atomic.AtomicInteger"/>
 <fullyQualifiedTypeName name="android.database.Cursor"/>
-<fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="android.app.PendingIntent"/>
 <fullyQualifiedTypeName name="android.app.AlarmManager"/>
+<fullyQualifiedTypeName name="android.content.DialogInterface"/>
+<fullyQualifiedTypeName name="android.widget.Toast"/>
 </qualifiedTypeNameHistroy>

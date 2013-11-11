@@ -44,12 +44,10 @@ public class DrugFragment extends Fragment {
 	Drug mDrug;
 	EditText mEditTitleField;
 	EditText mEditDosageField;
-	EditText mEditFrequencyField;
 	EditText mEditPurposeField;
 	EditText mEditPrescriberField;
 	TextView mTitleField;
 	TextView mDosageField;
-	TextView mFrequencyField;
 	TextView mPurposeField;
 	TextView mPrescriberField;
 	Button mEditButton;
@@ -131,24 +129,6 @@ public class DrugFragment extends Fragment {
 					// this one too
 				}
 			});
-			
-			mEditFrequencyField = (EditText) v.findViewById(R.id.drug_frequency);
-			mEditFrequencyField.setText(mDrug.getFrequency());
-			mEditFrequencyField.addTextChangedListener(new TextWatcher() {
-				public void onTextChanged(CharSequence c, int start,
-						int before, int count) {
-					mDrug.setFrequency(c.toString());
-				}
-
-				public void beforeTextChanged(CharSequence c, int start,
-						int count, int after) {
-					// this space intentionally left blank
-				}
-
-				public void afterTextChanged(Editable c) {
-					// this one too
-				}
-			});
 
 			mEditPurposeField = (EditText) v.findViewById(R.id.drug_purpose);
 			mEditPurposeField.setText(mDrug.getPurpose());
@@ -193,8 +173,6 @@ public class DrugFragment extends Fragment {
 			mTitleField.setText(mDrug.getTitle());
 			mDosageField = (TextView) v.findViewById(R.id.drug_dosage);
 			mDosageField.setText(mDrug.getDosage());
-			mFrequencyField = (TextView) v.findViewById(R.id.drug_frequency);
-			mFrequencyField.setText(mDrug.getFrequency());
 			mPurposeField = (TextView) v.findViewById(R.id.drug_purpose);
 			mPurposeField.setText(mDrug.getPurpose());
 			mPrescriberField = (TextView) v.findViewById(R.id.drug_prescriber);
