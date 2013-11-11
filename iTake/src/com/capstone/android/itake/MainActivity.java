@@ -58,7 +58,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	private void openSettings() {
-		
+		startActivity(new Intent(MainActivity.this, SettingsActivity.class));
 		
 	}
 

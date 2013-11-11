@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_back"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:scrollbars="vertical" >
+
+    <TextView
+        android:id="@+id/settingshead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Settings"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white_back"
+        android:textSize="40sp"
+        android:textStyle="bold" >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/settingshead"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Sound Settings"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white_back"
+        android:textStyle="bold" >
+
+	</TextView>
+	
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="10dp"
+        android:background="@color/white_back" >
+	</Spinner>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner1"
+        android:layout_below="@+id/spinner1"
+        android:layout_marginTop="1dp"
+        android:background="@color/white_back"
+        android:gravity="center|center_horizontal|fill"
+        android:paddingBottom="10dp"
+        android:paddingRight="75dp"
+        android:paddingTop="10dp"
+        android:text="Sounds On"
+        android:textAlignment="gravity"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/black_back" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:textOff="NO"
+        android:textOn="YES" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="30dp"
+        android:text="User Settings"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white_back"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="10dp"
+        android:background="@color/white_back"
+        android:ems="10"
+        android:gravity="center_horizontal|fill_vertical|start|bottom"
+        android:inputType="textEmailAddress"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="test@drug.com"
+        android:textColorHint="@color/black_back" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="10dp"
+        android:text="Email"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white_back"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText1"
+        android:layout_below="@+id/editText1"
+        android:layout_marginTop="10dp"
+        android:text="Password"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white_back"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="10dp"
+        android:background="@color/white_back"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="******" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/grey_button"
+        android:gravity="left|center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Edit My Info" />
+
+</RelativeLayout>

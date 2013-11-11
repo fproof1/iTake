@@ -36,5 +36,10 @@
     <string name="history_icon">My History</string>
     <string name="cheat_icon">My Information</string>
     <string name="settings_icon">Settings</string>
+    <string-array name="soundSpinItems">
+        <item>Default</item>
+        <item>Bell</item>
+        <item>Jazzy</item>
+    </string-array>
 
 </resources>
