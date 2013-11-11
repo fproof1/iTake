@@ -10,8 +10,8 @@ public class AlarmOnReceive extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent) 
 	{
 	    Intent i = new Intent(context, AlarmReceiver.class);
-	    AlarmReceiver.ALARM_ID = intent.getStringExtra("UID");
 	    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+	    i.putExtra("ID", intent.getStringExtra("UID"));
 	    context.startActivity(i);
 	}
 }

@@ -1,0 +1,267 @@
+/**
+ * 
+ */
+package com.capstone.android.itake;
+
+import java.util.Calendar;
+
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+/**
+ * @author Wolfpack16 (Alex Kane)
+ * 
+ */
+public class AlarmTimer extends Activity implements OnTimeSetListener
+{
+	public static String DRUG_ALARM_ID;
+
+	TimePicker myTimePicker;
+	Calendar Alarm;
+	Button SetAlarm;
+	Button CancelAlarm;
+	TextView textAlarmPrompt;
+	TimePickerDialog timePickerDialog;
+	iTakeDatabase DBhelper;
+	Drug DrugMed;
+	
+	private static int AlarmID; // Alarm ID Code
+	
+	private boolean mIgnoreTimeSet = false;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
+		DBhelper = new iTakeDatabase(this);
+		DrugMed = new Drug();
+		setContentView(R.layout.fragment_drug);
+
+		AlarmRecreate();
+	}
+
+	@Override
+	protected void onStart() 
+	{
+		super.onStart();
+	//	textAlarmPrompt = (TextView) findViewById(R.id.alarmprompt);
+		//textAlarmPrompt.setText("");
+		openTimePickerDialog(false);
+		// The activity is about to become visible.
+	}
+
+	@Override
+	protected void onRestart() 
+	{
+		super.onRestart();
+	}
+
+	@Override
+	protected void onResume() 
+	{
+		super.onResume();
+		// The activity has become visible (it is now "resumed").
+	}
+
+	@Override
+	protected void onPause() 
+	{
+		super.onPause();
+		// Another activity is taking focus (this activity is about to be
+		// "paused").
+	}
+
+	@Override
+	protected void onStop() 
+	{
+		super.onStop();
+		// The activity is no longer visible (it is now "stopped")
+	}
+
+	@Override
+	protected void onDestroy() 
+	{
+		super.onDestroy();
+		// The activity is about to be destroyed.
+	}
+
+	private void openTimePickerDialog(boolean is24r) 
+	{
+		Calendar calendar = Calendar.getInstance();
+
+		timePickerDialog = new TimePickerDialog(AlarmTimer.this, AlarmTimer.this, 
+				calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24r);
+		
+		// Make the Set Alarm button
+		timePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Set Alarm", new DialogInterface.OnClickListener() 
+		{
+		    public void onClick(DialogInterface dialog, int which) 
+		    {
+		        mIgnoreTimeSet = false;
+		    }
+		});
+
+		// Set the Cancel button
+		timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() 
+		{
+		    public void onClick(DialogInterface dialog, int which) 
+		    {
+		        mIgnoreTimeSet = true;
+		        dialog.cancel();
+		    }
+		});
+
+		timePickerDialog.setTitle("Set Alarm Time");
+		timePickerDialog.show();
+	}
+	
+	public void onTimeSet(TimePicker view, int hourOfDay, int minute) 
+	{
+	    if (mIgnoreTimeSet) 
+	    {
+	    	return;
+	    }
+	    else // get the values here - this will only run if 'Set' was clicked
+	    {
+	    	Calendar calNow = Calendar.getInstance();
+			Calendar calset = (Calendar) calNow.clone();
+
+			calset.set(Calendar.HOUR_OF_DAY, hourOfDay);
+			calset.set(Calendar.MINUTE, minute);
+			calset.set(Calendar.SECOND, 0);
+			calset.set(Calendar.MILLISECOND, 0);
+
+			if (calset.compareTo(calNow) <= 0) 
+			{
+				// Today Set time passed, count to tomorrow
+				calset.add(Calendar.DATE, 1);
+			}
+			AlarmSave(calset);
+	    }
+	}
+	
+	// Save Alarm Time Data in Database
+	public void AlarmSave(Calendar alarmtime) 
+	{
+		Cursor c = DBhelper.alarm_GetRow(DRUG_ALARM_ID);
+		try 
+		{
+			if (c.getCount() > 0 && c != null)
+			{
+				c.moveToFirst();
+				// insert variables into DB
+				DBhelper.alarm_updateRow(DRUG_ALARM_ID,	String.valueOf(alarmtime.getTimeInMillis()),
+						String.valueOf(AlarmManager.INTERVAL_DAY));
+				
+				Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
+				intent.putExtra("UID", c.getString(3));
+				
+				PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), c.getInt(2), 
+						intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+				AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmtime.getTimeInMillis(), 
+						AlarmManager.INTERVAL_DAY, pendingIntent);
+				Toast.makeText(getBaseContext(), "Alarm Updated!", Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				c.close();
+				AlarmID = DrugMed.getAlarmId();
+				DBhelper.alarm_createRow(DRUG_ALARM_ID,	String.valueOf(alarmtime.getTimeInMillis()),
+						String.valueOf(AlarmManager.INTERVAL_DAY), AlarmID);
+				
+				c = DBhelper.alarm_GetRow(DRUG_ALARM_ID);
+				try
+				{
+					c.moveToFirst();
+					
+					Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
+					intent.putExtra("UID", c.getString(3));
+					
+					PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), c.getInt(2), 
+							intent, 0);
+	
+					AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+					alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Long.parseLong(c.getString(0)), 
+							Long.parseLong(c.getString(1)), pendingIntent);
+					
+					Toast.makeText(getBaseContext(), "Alarm Created!", Toast.LENGTH_SHORT).show();
+				}
+				catch (Exception f)
+				{
+					System.out.println("Created Alarm Lookup Error: " + f.getLocalizedMessage());
+				}
+			}
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Database Save Error: " + e.getLocalizedMessage());
+		}
+		c.close();
+	}
+
+	public void AlarmRecreate()
+	{
+		// Recreate Alarms if any exist
+		Cursor c = DBhelper.alarm_GetAllRows();
+		try 
+		{
+			int numRows = c.getCount();
+			c.moveToFirst();
+			for (int i = 0; i < numRows; ++i) 
+			{
+				Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
+				intent.putExtra("UID", c.getString(3));
+				
+				PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), c.getInt(2), intent, 0);
+
+				AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Long.parseLong(c.getString(0)),
+						Long.parseLong(c.getString(1)), pendingIntent);
+
+				c.moveToNext();
+			}
+			Toast.makeText(getBaseContext(), String.valueOf(numRows) + " Alarms Recreated!", Toast.LENGTH_SHORT).show();
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Alarm Recreation Error: " + e.getLocalizedMessage());
+		}
+		c.close();
+	}
+}
+
+/*	public void setalarm(Calendar targetCal) {
+try {
+	Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
+	PendingIntent pendingIntent = PendingIntent.getBroadcast(
+			getBaseContext(), RQS_1, intent, 0);
+	AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+	alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+			targetCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
+			pendingIntent);
+
+	Toast.makeText(getBaseContext(), "Alarm Created!",
+			Toast.LENGTH_SHORT).show();
+} catch (Exception e) {
+	System.out.println("Alarm Set Error: " + e.getLocalizedMessage());
+	Toast.makeText(getBaseContext(),
+			"Unable to Set Alarm. Please try again!",
+			Toast.LENGTH_SHORT).show();
+}
+}
+*/

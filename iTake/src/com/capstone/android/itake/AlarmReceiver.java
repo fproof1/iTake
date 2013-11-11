@@ -1,4 +1,6 @@
 /**
+
+
  * 
  */
 package com.capstone.android.itake;
@@ -29,7 +31,7 @@ import android.widget.Toast;
  */
 public class AlarmReceiver extends Activity 
 {
-	public static String ALARM_ID;
+	public static String ALARMID;
 	
 	private MediaPlayer mMediaPlayer; 
 	private Vibrator phoneVibrate;
@@ -44,6 +46,9 @@ public class AlarmReceiver extends Activity
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);  
         
+        Intent intent = getIntent();
+        ALARMID = intent.getStringExtra("ID");
+
         DBhelper = new iTakeDatabase(this);
     }
 	
@@ -71,7 +76,7 @@ public class AlarmReceiver extends Activity
         		{
 	        		mMediaPlayer.stop();
         		}
-        		alarmUpdate(ALARM_ID);
+        		alarmUpdate(ALARMID);
                 AlarmReceiver.this.finish();
             } //end onClick.
         }); // end alertDialog.setButton.

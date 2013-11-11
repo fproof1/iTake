@@ -11,6 +11,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,7 +25,7 @@ import android.widget.Toast;
  * @author Wolfpack16 (Alex Kane)
  * 
  */
-public class AlarmTimer extends Activity
+public class AlarmTimer extends Activity implements OnTimeSetListener
 {
 	public static String DRUG_ALARM_ID;
 
@@ -35,10 +36,10 @@ public class AlarmTimer extends Activity
 	TextView textAlarmPrompt;
 	TimePickerDialog timePickerDialog;
 	iTakeDatabase DBhelper;
-	SQLiteDatabase db;
 	Drug DrugMed;
 
 	private static int AlarmID; // Alarm ID Code
+	private boolean mIgnoreTimeSet;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -46,7 +47,7 @@ public class AlarmTimer extends Activity
 		super.onCreate(savedInstanceState);
 		DBhelper = new iTakeDatabase(this);
 		DrugMed = new Drug();
-		//setContentView(R.layout.fragment_drug);
+		setContentView(R.layout.fragment_drug);
 
 		AlarmRecreate();
 	}
@@ -56,7 +57,7 @@ public class AlarmTimer extends Activity
 	{
 		super.onStart();
 	//	textAlarmPrompt = (TextView) findViewById(R.id.alarmprompt);
-		textAlarmPrompt.setText("");
+		//textAlarmPrompt.setText("");
 		openTimePickerDialog(false);
 		// The activity is about to become visible.
 	}
@@ -99,26 +100,47 @@ public class AlarmTimer extends Activity
 	private void openTimePickerDialog(boolean is24r) 
 	{
 		Calendar calendar = Calendar.getInstance();
+		
+		mIgnoreTimeSet = false;
 
-		timePickerDialog = new TimePickerDialog(AlarmTimer.this, onTimeSetListener, 
+		timePickerDialog = new TimePickerDialog(AlarmTimer.this, AlarmTimer.this, 
 				calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24r);
+		
+		timePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() 
+		{
+		    public void onClick(DialogInterface dialog, int which) 
+		    {
+		        mIgnoreTimeSet = true;
+		        timePickerDialog.onClick(dialog, which);
+		    }
+		});
+
+		// Set the Cancel button
+		timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Set Alarm", new DialogInterface.OnClickListener()
+		{
+		    public void onClick(DialogInterface dialog, int which) 
+		    {
+		    	mIgnoreTimeSet = false;
+		        timePickerDialog.onClick(dialog, which);	        
+		    }
+		});
 
 		timePickerDialog.setTitle("Set Alarm Time");
 		timePickerDialog.show();
 	}
-
-	OnTimeSetListener onTimeSetListener = new OnTimeSetListener() 
+	
+	public void onTimeSet(TimePicker view, int hourOfDay, int minute) 
 	{
-		public void onTimeSet(TimePicker view, int hourOfDay, int minute) 
+		if (!mIgnoreTimeSet)
 		{
 			Calendar calNow = Calendar.getInstance();
 			Calendar calset = (Calendar) calNow.clone();
-
+	
 			calset.set(Calendar.HOUR_OF_DAY, hourOfDay);
 			calset.set(Calendar.MINUTE, minute);
 			calset.set(Calendar.SECOND, 0);
 			calset.set(Calendar.MILLISECOND, 0);
-
+	
 			if (calset.compareTo(calNow) <= 0) 
 			{
 				// Today Set time passed, count to tomorrow
@@ -126,6 +148,7 @@ public class AlarmTimer extends Activity
 			}
 			AlarmSave(calset);
 		}
+		AlarmTimer.this.finish();
 	};
 	
 	// Save Alarm Time Data in Database
