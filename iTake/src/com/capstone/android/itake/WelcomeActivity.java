@@ -8,12 +8,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WelcomeActivity extends Activity implements OnClickListener {
 	
 	TextView appTitle, loginLine;
 	EditText email, password;
 	Button logmein, createnew;
+	
+	String username;
+	String userkey;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,8 +45,8 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 		switch(v.getId()) {
 		
 		case R.id.loginbutton:
+		
 			loginToMain();
-			
 			break;
 			
 		case R.id.newuserbutton:
