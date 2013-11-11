@@ -1,15 +1,118 @@
-<GridView xmlns:android="http://schemas.android.com/apk/res/android" 
-android:id="@+id/myGrid"
-android:layout_width="match_parent" 
-android:layout_height="match_parent"
-android:padding="30dp"
-android:verticalSpacing="30dp"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/blue_back"
+    android:columnCount="2"
+    android:rowCount="2" >
 
-android:horizontalSpacing="30dp"
-android:numColumns="2"
+    <ImageButton
+        android:id="@+id/drugbutton"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_column="0"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_row="0"
+        android:background="@color/blue_back"
+        android:contentDescription="@string/drug_icon"
+        android:scaleType="centerCrop"
+        android:src="@drawable/med_launcher" />
 
-android:columnWidth="120dp"
-android:stretchMode="columnWidth"
+    <ImageButton
+        android:id="@+id/historybutton"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_column="0"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_row="1"
+        android:background="@color/blue_back"
+        android:contentDescription="@string/history_icon"
+        android:scaleType="centerCrop"
+        android:src="@drawable/history_launcher" />
 
-android:gravity="center"
-/>
+    <ImageButton
+        android:id="@+id/settingsbutton"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_column="1"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_row="1"
+        android:background="@color/blue_back"
+        android:contentDescription="@string/settings_icon"
+        android:scaleType="centerCrop"
+        android:src="@drawable/settings_launcher" />
+
+    <ImageButton
+        android:id="@+id/cheatsbutton"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_column="1"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_row="0"
+        android:background="@color/blue_back"
+        android:contentDescription="@string/cheat_icon"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cheatsheet_launcher" />
+
+    <TextView
+        android:id="@+id/drug_label"
+        android:layout_column="0"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_row="0"
+        android:text="@string/drug_icon"
+        android:textColor="@color/white_back"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/cheat_label"
+        android:layout_column="1"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_row="0"
+        android:text="@string/cheat_icon"
+        android:textColor="@color/white_back"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/history_label"
+        android:layout_column="0"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_row="1"
+        android:text="@string/history_icon"
+        android:textColor="@color/white_back"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/settings_label"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/settings_icon"
+        android:textColor="@color/white_back"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</GridLayout>
