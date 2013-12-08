@@ -1,6 +1,10 @@
 package com.capstone.android.itake;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +44,35 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		
 		switch(v.getId()) {
 		case R.id.loginbutton:
-			goToMain();
+			String user = email.getText().toString();
+			String pass = password.getText().toString();
+			String conf = confirmPass.getText().toString();
+			if (pass != conf) {
+				password.setText("Password mismatch, please enter again");
+			}
+			else {
+				Password toStore = new Password(pass);
+				try {
+					String hashStore = Password.getSaltedHash(toStore);
+					String pFile = "ITAKEP";
+					String uFile = "ITAKEU";
+					FileOutputStream pStream = openFileOutput(pFile, Context.MODE_PRIVATE);
+					OutputStreamWriter toPFile = new OutputStreamWriter(pStream);
+					toPFile.write(hashStore);
+					toPFile.flush();
+					toPFile.close();
+					FileOutputStream uStream = openFileOutput(uFile, Context.MODE_PRIVATE);
+					OutputStreamWriter toUFile = new OutputStreamWriter(uStream);
+					toUFile.write(user);
+					toUFile.flush();
+					toUFile.close();
+					goToMain();
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}	
+				
+			}
 		break;
 			
 		}

@@ -5,5 +5,10 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry excluding="com/FMRAKLF/itake/R.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="libs/commons-codec-1.8-javadoc.jar"/>
+	<classpathentry kind="lib" path="libs/commons-codec-1.8-sources.jar"/>
+	<classpathentry kind="lib" path="libs/commons-codec-1.8-test-sources.jar"/>
+	<classpathentry kind="lib" path="libs/commons-codec-1.8-tests.jar"/>
+	<classpathentry kind="lib" path="libs/commons-codec-1.8.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
