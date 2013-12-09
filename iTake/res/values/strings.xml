@@ -41,5 +41,6 @@
         <item>Bell</item>
         <item>Jazzy</item>
     </string-array>
+    <string name="reminder_frequency">Reminder Frequency</string>
 
 </resources>

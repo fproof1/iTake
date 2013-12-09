@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
+
+
 /**
  * @author Wolfpack16 (Alex Kane)
  * 
@@ -28,15 +31,12 @@ import android.widget.Toast;
 public class AlarmTimer extends Activity implements OnTimeSetListener
 {
 	public static String DRUG_ALARM_ID;
+	public static String DRUG_NAME;
+	public static String DRUG_DOSAGE;
+	public static String DRUG_FREQUENCY;
 
-	TimePicker myTimePicker;
-	Calendar Alarm;
-	Button SetAlarm;
-	Button CancelAlarm;
-	TextView textAlarmPrompt;
 	TimePickerDialog timePickerDialog;
 	iTakeDatabase DBhelper;
-	Drug DrugMed;
 
 	private static int AlarmID; // Alarm ID Code
 	private boolean mIgnoreTimeSet;
@@ -46,9 +46,6 @@ public class AlarmTimer extends Activity implements OnTimeSetListener
 	{
 		super.onCreate(savedInstanceState);
 		DBhelper = new iTakeDatabase(this);
-		DrugMed = new Drug();
-		setContentView(R.layout.fragment_drug);
-
 		AlarmRecreate();
 	}
 
@@ -56,8 +53,6 @@ public class AlarmTimer extends Activity implements OnTimeSetListener
 	protected void onStart() 
 	{
 		super.onStart();
-	//	textAlarmPrompt = (TextView) findViewById(R.id.alarmprompt);
-		//textAlarmPrompt.setText("");
 		openTimePickerDialog(false);
 		// The activity is about to become visible.
 	}
@@ -124,6 +119,8 @@ public class AlarmTimer extends Activity implements OnTimeSetListener
 		        timePickerDialog.onClick(dialog, which);	        
 		    }
 		});
+		
+		timePickerDialog.setCancelable(false); // Has To Click Set Alarm or Cancel
 
 		timePickerDialog.setTitle("Set Alarm Time");
 		timePickerDialog.show();
@@ -162,23 +159,26 @@ public class AlarmTimer extends Activity implements OnTimeSetListener
 				c.moveToFirst();
 				// insert variables into DB
 				DBhelper.alarm_updateRow(DRUG_ALARM_ID,	String.valueOf(alarmtime.getTimeInMillis()),
-						String.valueOf(AlarmManager.INTERVAL_DAY));
+						c.getString(1));
 				
 				Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
 				intent.putExtra("UID", c.getString(3));
+				intent.putExtra("REQUEST_NUMBER", c.getInt(2));
 				
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), c.getInt(2), 
 						intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 				AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmtime.getTimeInMillis(), 
-						AlarmManager.INTERVAL_DAY, pendingIntent);
+				alarmManager.set(AlarmManager.RTC_WAKEUP, alarmtime.getTimeInMillis(), pendingIntent);
+				
 				Toast.makeText(getBaseContext(), "Alarm Updated!", Toast.LENGTH_SHORT).show();
 			}
 			else
 			{
 				c.close();
-				AlarmID = DrugMed.getAlarmId();
+				AlarmID = DBhelper.alarm_tableSize() + 1;
+				
+				// All New Alarms are given by default a daily frequency interval upon creation
 				DBhelper.alarm_createRow(DRUG_ALARM_ID,	String.valueOf(alarmtime.getTimeInMillis()),
 						String.valueOf(AlarmManager.INTERVAL_DAY), AlarmID);
 				
@@ -189,13 +189,13 @@ public class AlarmTimer extends Activity implements OnTimeSetListener
 					
 					Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
 					intent.putExtra("UID", c.getString(3));
+					intent.putExtra("REQUEST_NUMBER", c.getInt(2));
 					
 					PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), c.getInt(2), 
-							intent, 0);
+							intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	
 					AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-					alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Long.parseLong(c.getString(0)), 
-							Long.parseLong(c.getString(1)), pendingIntent);
+					alarmManager.set(AlarmManager.RTC_WAKEUP, alarmtime.getTimeInMillis(), pendingIntent);
 					
 					Toast.makeText(getBaseContext(), "Alarm Created!", Toast.LENGTH_SHORT).show();
 				}
@@ -207,6 +207,7 @@ public class AlarmTimer extends Activity implements OnTimeSetListener
 		} 
 		catch (Exception e) 
 		{
+			Toast.makeText(getBaseContext(), "Database Save Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 			System.out.println("Database Save Error: " + e.getLocalizedMessage());
 		}
 		c.close();
@@ -216,6 +217,10 @@ public class AlarmTimer extends Activity implements OnTimeSetListener
 	{
 		// Recreate Alarms if any exist
 		Cursor c = DBhelper.alarm_GetAllRows();
+		Calendar calNow = Calendar.getInstance();
+		Calendar calset = (Calendar) calNow.clone();
+		boolean missedmeds = false;
+		
 		try 
 		{
 			int numRows = c.getCount();
@@ -224,42 +229,56 @@ public class AlarmTimer extends Activity implements OnTimeSetListener
 			{
 				Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
 				intent.putExtra("UID", c.getString(3));
+				intent.putExtra("REQUEST_NUMBER", c.getInt(2));
 				
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), c.getInt(2), intent, 0);
+				PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), c.getInt(2), 
+						intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-				AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Long.parseLong(c.getString(0)),
-						Long.parseLong(c.getString(1)), pendingIntent);
-
+				// Check to see if alarm time was passed
+				if(calset.getTimeInMillis() < Long.parseLong(c.getString(0)))
+				{
+					// If not, compliance shall not be affected
+					AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+					alarmManager.set(AlarmManager.RTC_WAKEUP, Long.parseLong(c.getString(0)), pendingIntent);
+				}
+				else
+				{
+					// If so, compliance is automatically set to 0
+					// If it was missed multiple times, account for them
+					missedmeds = true;
+					long past_alarmtime = Long.parseLong(c.getString(0));
+					
+					while(calset.getTimeInMillis() > past_alarmtime)
+					{
+						DBhelper.comply_createRow(c.getString(3), String.valueOf(past_alarmtime), 0);
+						past_alarmtime += Long.parseLong(c.getString(1));
+					}
+					
+					// Update variables into DB
+	    			DBhelper.alarm_updateRow(c.getString(3), String.valueOf(past_alarmtime), c.getString(1));
+					
+					// Set Alarm after compliance is accounted
+					AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+					alarmManager.set(AlarmManager.RTC_WAKEUP, past_alarmtime, pendingIntent);
+				}
 				c.moveToNext();
 			}
-			Toast.makeText(getBaseContext(), String.valueOf(numRows) + " Alarms Recreated!", Toast.LENGTH_SHORT).show();
+			
+			if(missedmeds)
+			{
+				Toast.makeText(getBaseContext(), String.valueOf(numRows) + 
+						" Alarms Recreated! Medication(s) were not taken on time!", Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				Toast.makeText(getBaseContext(), String.valueOf(numRows) + " Alarms Recreated!", Toast.LENGTH_SHORT).show();
+			}
 		} 
 		catch (Exception e) 
 		{
+			Toast.makeText(getBaseContext(), "Alarm Recreation Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 			System.out.println("Alarm Recreation Error: " + e.getLocalizedMessage());
 		}
 		c.close();
 	}
 }
-
-/*	public void setalarm(Calendar targetCal) {
-try {
-	Intent intent = new Intent(getBaseContext(), AlarmOnReceive.class);
-	PendingIntent pendingIntent = PendingIntent.getBroadcast(
-			getBaseContext(), RQS_1, intent, 0);
-	AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-	alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-			targetCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
-			pendingIntent);
-
-	Toast.makeText(getBaseContext(), "Alarm Created!",
-			Toast.LENGTH_SHORT).show();
-} catch (Exception e) {
-	System.out.println("Alarm Set Error: " + e.getLocalizedMessage());
-	Toast.makeText(getBaseContext(),
-			"Unable to Set Alarm. Please try again!",
-			Toast.LENGTH_SHORT).show();
-}
-}
-*/

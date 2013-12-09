@@ -113,6 +113,12 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="Set Reminder" />
+  
+  <Button
+      android:id="@+id/frequency_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Set Reminder Interval" />
 
   <TextView
     android:layout_width="match_parent"
@@ -130,4 +136,3 @@
       android:text="Save Medication"/>
 
 </LinearLayout>
-

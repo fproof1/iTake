@@ -55,6 +55,7 @@ public class DrugFragment extends Fragment {
 	Button mEditButton;
 	Button mSaveButton;
 	Button mAlarmButton;
+	Button mFreqButton;
 	CheckBox mCheckBox;
 	ImageButton mPhotoButton;
 	ImageView mPhotoView;
@@ -238,6 +239,14 @@ public class DrugFragment extends Fragment {
 				public void onClick(View v) {
 					Intent i = new Intent(getActivity(), AlarmTimer.class);
 					AlarmTimer.DRUG_ALARM_ID =  mDrug.getId().toString();
+					startActivity(i);
+				}
+			});
+			mFreqButton = (Button) v.findViewById(R.id.frequency_button);
+			mFreqButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					Intent i = new Intent(getActivity(), AlarmFrequency.class);
+					AlarmFrequency.DRUG_ALARM_ID =  mDrug.getId().toString();
 					startActivity(i);
 				}
 			});

@@ -12,6 +12,7 @@ public class AlarmOnReceive extends BroadcastReceiver
 	    Intent i = new Intent(context, AlarmReceiver.class);
 	    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
 	    i.putExtra("ID", intent.getStringExtra("UID"));
+	    i.putExtra("RQS", intent.getIntExtra("REQUEST_NUMBER", 0));
 	    context.startActivity(i);
 	}
 }
